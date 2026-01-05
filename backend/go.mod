@@ -1,0 +1,3 @@
+module quickrent
+
+go 1.24.3

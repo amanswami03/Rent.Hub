@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "username": "postgres",
+            "database": "renthub",
+            "group": "renthub",
+            "name": "renthub",
+            "password": "1234",
+            "connectionTimeout": 30
+        }
+    ]
+}
