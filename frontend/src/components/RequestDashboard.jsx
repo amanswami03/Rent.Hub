@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, MessageCircle, CheckCircle, XCircle, Clock, AlertCircle, Loader2 } from 'lucide-react';
 import MessagingUI from './MessagingUI';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://rent-hub-1r5o.onrender.com/api';
 
 function RequestDashboard({ isOpen, onClose, token }) {
   const [activeTab, setActiveTab] = useState('incoming');

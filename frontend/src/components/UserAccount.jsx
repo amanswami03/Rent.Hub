@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, LogOut, AlertCircle, MessageCircle } from 'lucide-react';
 import MessagingUI from './MessagingUI';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://rent-hub-1r5o.onrender.com/api';
 
 function UserAccount({ isOpen, onClose, token, user, onLogout }) {
   const [activeTab, setActiveTab] = useState('profile');

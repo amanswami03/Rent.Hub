@@ -16,7 +16,7 @@ export default function MessagingUI({
   const messagesEndRef = useRef(null);
   const currentUserName = JSON.parse(localStorage.getItem('user') || '{}').name || 'You';
 
-  const API_BASE_URL = 'http://localhost:8080/api';
+  const API_BASE_URL = 'https://rent-hub-1r5o.onrender.com/api';
 
   // Fetch messages on mount and setup polling
   useEffect(() => {

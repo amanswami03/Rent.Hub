@@ -73,7 +73,7 @@ function AddItemForm({ isOpen, onClose, onItemAdded }) {
       console.log('Token from localStorage:', token);
       console.log('Creating item with auth header:', `Bearer ${token}`);
 
-      const response = await fetch('http://localhost:8080/api/items', {
+      const response = await fetch('https://rent-hub-1r5o.onrender.com/api/items', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

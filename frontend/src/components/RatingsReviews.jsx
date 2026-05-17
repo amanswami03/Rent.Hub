@@ -24,7 +24,7 @@ function RatingsReviews({ itemId, isOpen, onClose }) {
   const fetchReviews = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/api/items/${itemId}/reviews`);
+      const response = await fetch(`https://rent-hub-1r5o.onrender.com/api/items/${itemId}/reviews`);
       if (response.ok) {
         const data = await response.json();
         setReviews(data || []);
@@ -54,7 +54,7 @@ function RatingsReviews({ itemId, isOpen, onClose }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/items/${itemId}/reviews`, {
+      const response = await fetch(`https://rent-hub-1r5o.onrender.com/api/items/${itemId}/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

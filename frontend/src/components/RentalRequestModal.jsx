@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, AlertCircle, Calendar } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://rent-hub-1r5o.onrender.com/api';
 
 function RentalRequestModal({ isOpen, onClose, item, token, onRequestSent }) {
   const [startDate, setStartDate] = useState('');

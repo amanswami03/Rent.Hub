@@ -7,7 +7,7 @@ import UserAccount from './components/UserAccount';
 import RentalRequestModal from './components/RentalRequestModal';
 import RequestDashboard from './components/RequestDashboard';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://rent-hub-1r5o.onrender.com/api';
 
 function LoginSignupModal({ isOpen, onClose, onLogin }) {
   const [isLogin, setIsLogin] = useState(true);

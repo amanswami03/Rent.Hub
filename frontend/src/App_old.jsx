@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ShoppingCart, User, Heart, Menu, ChevronDown, Star, TrendingUp, Clock, Shield } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://rent-hub-1r5o.onrender.com/api';
 
 function LoginSignupModal({ isOpen, onClose, onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
