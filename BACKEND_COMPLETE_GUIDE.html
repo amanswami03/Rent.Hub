@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BACKEND_COMPLETE_GUIDE</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@5/github-markdown-light.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#renthub-backend---complete-guide"
+id="toc-renthub-backend---complete-guide">RentHub Backend - Complete
+Guide</a>
+<ul>
+<li><a href="#quick-start" id="toc-quick-start">🚀 QUICK START</a></li>
+<li><a href="#project-overview" id="toc-project-overview">📊 PROJECT
+OVERVIEW</a></li>
+<li><a href="#architecture" id="toc-architecture">🏗️
+ARCHITECTURE</a></li>
+<li><a href="#file-structure" id="toc-file-structure">📁 FILE
+STRUCTURE</a></li>
+<li><a href="#authentication" id="toc-authentication">🔐
+AUTHENTICATION</a></li>
+<li><a href="#api-endpoints-25" id="toc-api-endpoints-25">🔌 API
+ENDPOINTS (25+)</a></li>
+<li><a href="#database-schema-7-tables"
+id="toc-database-schema-7-tables">📊 DATABASE SCHEMA (7 TABLES)</a></li>
+<li><a href="#rental-workflow" id="toc-rental-workflow">🔄 RENTAL
+WORKFLOW</a></li>
+<li><a href="#key-code-patterns" id="toc-key-code-patterns">🔑 KEY CODE
+PATTERNS</a></li>
+<li><a href="#core-modules-explained" id="toc-core-modules-explained">📋
+CORE MODULES EXPLAINED</a></li>
+<li><a href="#data-flow-examples" id="toc-data-flow-examples">🌊 DATA
+FLOW EXAMPLES</a></li>
+<li><a href="#error-codes-handling" id="toc-error-codes-handling">🐛
+ERROR CODES &amp; HANDLING</a></li>
+<li><a href="#dependencies-go.mod" id="toc-dependencies-go.mod">⚙️
+DEPENDENCIES (go.mod)</a></li>
+<li><a href="#deployment" id="toc-deployment">🚀 DEPLOYMENT</a></li>
+<li><a href="#common-tasks" id="toc-common-tasks">🔧 COMMON
+TASKS</a></li>
+<li><a href="#production-checklist" id="toc-production-checklist">✅
+PRODUCTION CHECKLIST</a></li>
+<li><a href="#debugging-tips" id="toc-debugging-tips">🎯 DEBUGGING
+TIPS</a></li>
+<li><a href="#performance" id="toc-performance">📈 PERFORMANCE</a></li>
+<li><a href="#security-notes" id="toc-security-notes">🔐 SECURITY
+NOTES</a></li>
+<li><a href="#testing" id="toc-testing">🎓 TESTING</a></li>
+<li><a href="#quick-reference" id="toc-quick-reference">📞 QUICK
+REFERENCE</a></li>
+<li><a href="#key-features" id="toc-key-features">✨ KEY
+FEATURES</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="renthub-backend---complete-guide">RentHub Backend - Complete
+Guide</h1>
+<p><strong>Last Updated:</strong> May 16, 2024 |
+<strong>Status:</strong> Production Ready ✅</p>
+<hr />
+<h2 id="quick-start">🚀 QUICK START</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> backend</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> run cmd/renthub/main.go</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Server: http://localhost:8080</span></span></code></pre></div>
+<hr />
+<h2 id="project-overview">📊 PROJECT OVERVIEW</h2>
+<p><strong>RentHub Backend</strong> is a Go REST API for a peer-to-peer
+rental marketplace.</p>
+<p><strong>Tech Stack:</strong> - Language: Go 1.23 - Framework: Gin Web
+Framework - Database: PostgreSQL 12+ - ORM: GORM - Auth: JWT (HS256) +
+bcrypt</p>
+<p><strong>Key Stats:</strong> - 25+ API Endpoints - 7 Database Tables -
+~3,500 Lines of Code - Full CRUD Operations - Real-time Messaging</p>
+<hr />
+<h2 id="architecture">🏗️ ARCHITECTURE</h2>
+<pre><code>Frontend (React)
+    ↓ HTTP/JSON
+Gin Router (Port 8080)
+    ├─ CORS Middleware
+    ├─ Auth Middleware (JWT validation)
+    └─ Route Handlers
+        ├─ auth.go (Signup/Login)
+        ├─ items.go (Item CRUD, Search, Reviews)
+        └─ rentals.go (Rentals, Messages, Wishlist)
+            ↓ SQL Queries (GORM)
+PostgreSQL Database (7 Tables)</code></pre>
+<hr />
+<h2 id="file-structure">📁 FILE STRUCTURE</h2>
+<pre><code>backend/
+├── cmd/renthub/main.go          ← Entry point &amp; routes
+├── internal/
+│   ├── auth/jwt.go              ← Token &amp; password ops
+│   ├── database/db.go           ← DB connection &amp; migrations
+│   ├── handlers/
+│   │   ├── auth.go              ← Signup, Login
+│   │   ├── items.go             ← Item CRUD, Reviews
+│   │   └── rentals.go           ← Rentals, Messages, Wishlist
+│   ├── middleware/auth.go       ← JWT &amp; CORS
+│   └── models/
+│       ├── user.go              ← User, SignupRequest, LoginRequest
+│       ├── item.go              ← Item, Review
+│       └── rental.go            ← Rental, RentalRequest, Message, Wishlist
+├── go.mod                       ← Dependencies
+└── run.sh                       ← Start script</code></pre>
+<hr />
+<h2 id="authentication">🔐 AUTHENTICATION</h2>
+<p><strong>Flow:</strong> 1. User sends:
+<code>POST /api/auth/signup</code> → System hashes password (bcrypt,
+cost=10) 2. System generates JWT token (expiration: 7 days) 3. Client
+stores token in localStorage 4. Each request:
+<code>Authorization: Bearer {token}</code> 5. AuthMiddleware validates
+token → extracts user_id → handler proceeds</p>
+<p><strong>JWT Claims:</strong>
+<code>{ user_id, email, exp: now+7days }</code></p>
+<p><strong>Bcrypt:</strong> Password hashed with random salt, never
+stored plain-text</p>
+<hr />
+<h2 id="api-endpoints-25">🔌 API ENDPOINTS (25+)</h2>
+<h3 id="authentication-public">Authentication (Public)</h3>
+<pre><code>POST   /api/auth/signup          Create user account
+POST   /api/auth/login           Get JWT token</code></pre>
+<h3 id="items-mixed">Items (Mixed)</h3>
+<pre><code>GET    /api/items                Get all items [public]
+GET    /api/items/city           Get items by city [public]
+GET    /api/items/:id            Get item details [public]
+GET    /api/items/search         Search items [public]
+POST   /api/items                Create item [protected]
+PUT    /api/items/:id            Update item [protected, owner only]
+DELETE /api/items/:id            Delete item [protected, owner only]
+POST   /api/items/:id/reviews    Add review [protected]
+GET    /api/items/:id/reviews    Get reviews [public]</code></pre>
+<h3 id="wishlist-protected">Wishlist (Protected)</h3>
+<pre><code>POST   /api/wishlist             Add to wishlist
+GET    /api/wishlist             Get wishlist
+DELETE /api/wishlist/:id         Remove from wishlist</code></pre>
+<h3 id="rentals-protected">Rentals (Protected)</h3>
+<pre><code>POST   /api/rentals              Create rental request
+GET    /api/rentals              Get my active rentals
+GET    /api/rentals/requests/incoming      Requests to rent my items
+GET    /api/rentals/requests/outgoing      Requests I sent
+POST   /api/rentals/requests/:id/approve   Owner approves request
+POST   /api/rentals/requests/:id/reject    Owner rejects request</code></pre>
+<h3 id="messages-protected">Messages (Protected)</h3>
+<pre><code>POST   /api/messages             Send message
+GET    /api/messages/rental-request/:id    Get messages</code></pre>
+<h3 id="user-account-protected">User Account (Protected)</h3>
+<pre><code>GET    /api/user/profile         Get user profile
+GET    /api/user/my-items        Get my listed items</code></pre>
+<hr />
+<h2 id="database-schema-7-tables">📊 DATABASE SCHEMA (7 TABLES)</h2>
+<table>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 33%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>users</strong></td>
+<td>id, name, email, password_hash, city, lat/long, created_at</td>
+<td>User accounts</td>
+</tr>
+<tr>
+<td><strong>items</strong></td>
+<td>id, owner_id, name, category, price, available, rating, reviews,
+lat/long</td>
+<td>Rental items</td>
+</tr>
+<tr>
+<td><strong>rental_requests</strong></td>
+<td>id, item_id, renter_id, owner_id, dates, status, message</td>
+<td>Rental workflow</td>
+</tr>
+<tr>
+<td><strong>rentals</strong></td>
+<td>id, item_id, renter_id, owner_id, dates, total_cost, status</td>
+<td>Active rentals</td>
+</tr>
+<tr>
+<td><strong>messages</strong></td>
+<td>id, rental_request_id, sender_id, receiver_id, content, is_read</td>
+<td>Conversations</td>
+</tr>
+<tr>
+<td><strong>wishlists</strong></td>
+<td>id, user_id, item_id</td>
+<td>Saved items</td>
+</tr>
+<tr>
+<td><strong>reviews</strong></td>
+<td>id, item_id, user_id, rating (1-5), comment</td>
+<td>Item ratings</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Relationships:</strong></p>
+<pre><code>users ──1:N──&gt; items (owner)
+users ──1:N──&gt; rental_requests (renter/owner)
+users ──1:N──&gt; rentals (renter/owner)
+users ──1:N──&gt; messages (sender/receiver)
+users ──1:N──&gt; reviews
+items ──1:N──&gt; rental_requests
+items ──1:N──&gt; rentals
+items ──1:N──&gt; reviews
+rental_requests ──1:N──&gt; messages</code></pre>
+<hr />
+<h2 id="rental-workflow">🔄 RENTAL WORKFLOW</h2>
+<pre><code>Rental Request States:
+pending ──[owner approves]──&gt; approved ──[creates Rental]──&gt; item unavailable
+    └──[owner rejects]──&gt; rejected ──&gt; item remains available
+
+Rental States:
+active ──[end date reached]──&gt; completed
+     └──[cancelled]──&gt; cancelled</code></pre>
+<hr />
+<h2 id="key-code-patterns">🔑 KEY CODE PATTERNS</h2>
+<h3 id="get-user-id-from-context">Get User ID from Context</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>userID<span class="op">,</span> _ <span class="op">:=</span> c<span class="op">.</span>Get<span class="op">(</span><span class="st">&quot;user_id&quot;</span><span class="op">)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>uid <span class="op">:=</span> userID<span class="op">.(</span><span class="dt">uint</span><span class="op">)</span></span></code></pre></div>
+<h3 id="database-queries">Database Queries</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Get by ID</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>database<span class="op">.</span>DB<span class="op">.</span>First<span class="op">(&amp;</span>item<span class="op">,</span> id<span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Filter</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>database<span class="op">.</span>DB<span class="op">.</span>Where<span class="op">(</span><span class="st">&quot;owner_id = ?&quot;</span><span class="op">,</span> userID<span class="op">).</span>Find<span class="op">(&amp;</span>items<span class="op">)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Create</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>database<span class="op">.</span>DB<span class="op">.</span>Create<span class="op">(&amp;</span>user<span class="op">)</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Update</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>database<span class="op">.</span>DB<span class="op">.</span>Save<span class="op">(&amp;</span>item<span class="op">)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Delete</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>database<span class="op">.</span>DB<span class="op">.</span>Delete<span class="op">(&amp;</span>item<span class="op">)</span></span></code></pre></div>
+<h3 id="json-responses">JSON Responses</h3>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>c<span class="op">.</span>JSON<span class="op">(</span>http<span class="op">.</span>StatusOK<span class="op">,</span> gin<span class="op">.</span>H<span class="op">{</span><span class="st">&quot;key&quot;</span><span class="op">:</span> <span class="st">&quot;value&quot;</span><span class="op">})</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>c<span class="op">.</span>JSON<span class="op">(</span>http<span class="op">.</span>StatusCreated<span class="op">,</span> item<span class="op">)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>c<span class="op">.</span>JSON<span class="op">(</span>http<span class="op">.</span>StatusBadRequest<span class="op">,</span> gin<span class="op">.</span>H<span class="op">{</span><span class="st">&quot;error&quot;</span><span class="op">:</span> <span class="st">&quot;message&quot;</span><span class="op">})</span></span></code></pre></div>
+<hr />
+<h2 id="core-modules-explained">📋 CORE MODULES EXPLAINED</h2>
+<h3 id="authentication-authjwt.go">1. Authentication
+(<code>auth/jwt.go</code>)</h3>
+<p><strong>GenerateToken(user User) → string</strong> - Creates JWT with
+user_id, email, exp=now+7days - Signed with HS256 algorithm - Used after
+signup/login</p>
+<p>**VerifyToken(tokenString) → *CustomClaims, error** - Parses and
+validates JWT signature - Checks expiration - Returns user_id and email
+- Called by AuthMiddleware</p>
+<p><strong>HashPassword(password) → string</strong> - Bcrypt hash with
+salt (cost=10) - Takes ~100ms per hash - Only stored hash, never
+plain-text</p>
+<p><strong>ComparePasswords(hash, password) → error</strong> - Verifies
+password matches bcrypt hash - Returns nil if match, error if mismatch -
+Used during login</p>
+<h3 id="database-databasedb.go">2. Database
+(<code>database/db.go</code>)</h3>
+<p><strong>InitDB() → error</strong> - Connects to PostgreSQL - Runs
+AutoMigrate for all models - Creates/updates tables - Stores connection
+in global DB variable</p>
+<p>**GetDB() → *gorm.DB** - Returns global database instance - Used by
+handlers for queries</p>
+<h3 id="handlers-business-logic">3. Handlers (Business Logic)</h3>
+<h4 id="auth.go">auth.go</h4>
+<ul>
+<li><strong>Signup:</strong> Validate request → Hash password → Create
+user → Generate token</li>
+<li><strong>Login:</strong> Find user by email → Verify password →
+Generate token</li>
+</ul>
+<h4 id="items.go">items.go</h4>
+<ul>
+<li><strong>GetItems:</strong> Return all items</li>
+<li><strong>GetItemsByCity:</strong> Filter items by city (with fallback
+to all)</li>
+<li><strong>GetItemByID:</strong> Get single item details</li>
+<li><strong>CreateItem:</strong> Validate → Set owner/location from user
+→ Create</li>
+<li><strong>UpdateItem:</strong> Verify ownership → Update → Save</li>
+<li><strong>DeleteItem:</strong> Verify ownership → Delete</li>
+<li><strong>SearchItems:</strong> Filter by name/category and city</li>
+<li><strong>CreateReview:</strong> Validate rating → Create review →
+Update item.rating</li>
+<li><strong>GetReviews:</strong> Return reviews ordered by newest
+first</li>
+<li><strong>updateItemRating:</strong> Recalculate average rating after
+new review</li>
+</ul>
+<h4 id="rentals.go">rentals.go</h4>
+<ul>
+<li><strong>AddToWishlist:</strong> Create user’s saved item</li>
+<li><strong>GetWishlist:</strong> Get user’s saved items</li>
+<li><strong>RemoveFromWishlist:</strong> Delete saved item</li>
+<li><strong>RentItem:</strong> Create rental request
+(status=pending)</li>
+<li><strong>GetMyRentals:</strong> Get user’s active rentals</li>
+<li><strong>GetIncomingRentalRequests:</strong> Requests to rent my
+items (owner view)</li>
+<li><strong>GetOutgoingRentalRequests:</strong> Requests I sent (renter
+view)</li>
+<li><strong>ApproveRentalRequest:</strong> Create rental → Mark item
+unavailable</li>
+<li><strong>RejectRentalRequest:</strong> Reject request → Keep item
+available</li>
+<li><strong>SendMessage:</strong> Send message in rental request
+conversation</li>
+<li><strong>GetRentalRequestMessages:</strong> Get all messages, mark as
+read</li>
+<li><strong>GetMyItems:</strong> Get items owned by user</li>
+<li><strong>GetUserProfile:</strong> Get user account info</li>
+</ul>
+<h3 id="middleware-middlewareauth.go">4. Middleware
+(<code>middleware/auth.go</code>)</h3>
+<p><strong>AuthMiddleware():</strong> - Validates
+<code>Authorization: Bearer {token}</code> header - Parses token format
+- Verifies JWT signature &amp; expiration - Extracts user_id and email →
+stores in context - Returns 401 if invalid</p>
+<p><strong>CORSMiddleware():</strong> - Sets
+<code>Access-Control-Allow-Origin: *</code> - Allows all HTTP methods
+(GET, POST, PUT, DELETE) - Allows Authorization header - Responds 204 to
+OPTIONS (pre-flight)</p>
+<h3 id="models-data-structures">5. Models (Data Structures)</h3>
+<p><strong>User:</strong> id, name, email, password (hash), city,
+pincode, lat/long</p>
+<p><strong>Item:</strong> id, owner_id, name, category, description,
+price, image, available, rating, reviews, lat/long</p>
+<p><strong>Rental:</strong> id, item_id, renter_id, owner_id,
+start_date, end_date, status, total_cost</p>
+<p><strong>RentalRequest:</strong> id, item_id, renter_id, owner_id,
+dates, status, message, rental_id</p>
+<p><strong>Message:</strong> id, rental_request_id, sender_id,
+receiver_id, content, is_read</p>
+<p><strong>Review:</strong> id, item_id, user_id, rating, comment</p>
+<p><strong>Wishlist:</strong> id, user_id, item_id</p>
+<hr />
+<h2 id="data-flow-examples">🌊 DATA FLOW EXAMPLES</h2>
+<h3 id="signup-flow">Signup Flow</h3>
+<pre><code>POST /api/auth/signup
+├─ Validate JSON
+├─ Check passwords match
+├─ HashPassword() → bcrypt hash
+├─ DB CREATE user {name, email, hash, city, lat, long}
+├─ GenerateToken(user) → JWT
+└─ Return {token, user{id, name, email}}</code></pre>
+<h3 id="create-item-flow">Create Item Flow</h3>
+<pre><code>POST /api/items (with Authorization header)
+├─ AuthMiddleware → validate token → extract user_id
+├─ CreateItem handler
+├─ Validate request JSON
+├─ DB SELECT user WHERE id = user_id
+├─ Set item.owner_id = user_id
+├─ Set item.city, lat, long from user
+├─ Set item.available = true
+├─ DB INSERT item
+└─ Return created item</code></pre>
+<h3 id="rental-request-flow">Rental Request Flow</h3>
+<pre><code>POST /api/rentals (with token)
+├─ AuthMiddleware → user_id (renter)
+├─ Validate dates
+├─ DB SELECT item → check owner_id ≠ renter_id
+├─ DB INSERT rental_request {status: &quot;pending&quot;}
+└─ Return request
+
+Then owner:
+POST /api/rentals/requests/{id}/approve
+├─ AuthMiddleware → user_id (owner)
+├─ Verify ownership
+├─ Calculate: days = (end_date - start_date)
+├─ Calculate: cost = days × item.price
+├─ DB INSERT rental {status: &quot;active&quot;, cost}
+├─ DB UPDATE rental_request {status: &quot;approved&quot;}
+├─ DB UPDATE item {available: false}
+└─ Return rental</code></pre>
+<h3 id="message-flow">Message Flow</h3>
+<pre><code>POST /api/messages (with token)
+├─ Validate request
+├─ DB SELECT rental_request
+├─ Verify sender is owner OR renter
+├─ Determine receiver (other party)
+├─ DB INSERT message {sender_id, receiver_id, content}
+└─ Return message
+
+Later:
+GET /api/messages/rental-request/{id}
+├─ DB SELECT messages WHERE rental_request_id = id
+├─ Order by created_at ASC
+├─ DB UPDATE messages SET is_read = true
+└─ Return messages</code></pre>
+<hr />
+<h2 id="error-codes-handling">🐛 ERROR CODES &amp; HANDLING</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Reason</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>Get, Update success</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>Signup, Create item</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>Missing fields, validation fail</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>No/invalid token</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>Not owner, trying to delete another’s item</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>Item/user doesn’t exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+<td>Database error, hash failure</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Error Response Format:</strong></p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="st">&quot;descriptive message&quot;</span><span class="fu">}</span></span></code></pre></div>
+<hr />
+<h2 id="dependencies-go.mod">⚙️ DEPENDENCIES (go.mod)</h2>
+<pre><code>github.com/gin-gonic/gin v1.9.1           ← Web framework
+github.com/golang-jwt/jwt/v5 v5.0.0       ← JWT tokens
+golang.org/x/crypto v0.17.0                ← Bcrypt
+gorm.io/gorm v1.25.5                      ← ORM
+gorm.io/driver/postgres v1.5.4            ← PostgreSQL driver</code></pre>
+<hr />
+<h2 id="deployment">🚀 DEPLOYMENT</h2>
+<h3 id="local-development">Local Development</h3>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Start PostgreSQL</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> services start postgresql</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Create database</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-U</span> postgres <span class="at">-f</span> renthub.sql</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Run backend</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> backend</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> run cmd/renthub/main.go</span></code></pre></div>
+<h3 id="environment-variables-production">Environment Variables
+(Production)</h3>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">DB_HOST</span><span class="op">=</span>localhost</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="va">DB_PORT</span><span class="op">=</span>5432</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="va">DB_USER</span><span class="op">=</span>postgres</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="va">DB_PASSWORD</span><span class="op">=</span>your_password</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="va">DB_NAME</span><span class="op">=</span>renthub</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="va">JWT_SECRET</span><span class="op">=</span>your-secret-key-min-32-chars</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="va">PORT</span><span class="op">=</span>8080</span></code></pre></div>
+<h3 id="docker">Docker</h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> renthub-backend .</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-p</span> 8080:8080 <span class="at">-e</span> DB_HOST=postgres renthub-backend</span></code></pre></div>
+<hr />
+<h2 id="common-tasks">🔧 COMMON TASKS</h2>
+<h3 id="add-new-api-endpoint">Add New API Endpoint</h3>
+<ol type="1">
+<li>Create handler function in <code>internal/handlers/</code></li>
+<li>Register route in <code>cmd/renthub/main.go</code></li>
+<li>Test with curl/Postman</li>
+</ol>
+<h3 id="add-database-field">Add Database Field</h3>
+<ol type="1">
+<li>Add field to model struct in <code>internal/models/</code></li>
+<li>Restart server (AutoMigrate adds column)</li>
+</ol>
+<h3 id="add-database-index">Add Database Index</h3>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Item <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  ID   <span class="dt">uint</span> <span class="st">`gorm:&quot;index&quot;`</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  City <span class="dt">string</span> <span class="st">`gorm:&quot;index&quot;`</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="production-checklist">✅ PRODUCTION CHECKLIST</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Move JWT secret to environment
+variable</label></li>
+<li><label><input type="checkbox" />Enable HTTPS/SSL for
+database</label></li>
+<li><label><input type="checkbox" />Change default database
+password</label></li>
+<li><label><input type="checkbox" />Add request logging</label></li>
+<li><label><input type="checkbox" />Setup error monitoring
+(Sentry)</label></li>
+<li><label><input type="checkbox" />Add automated tests</label></li>
+<li><label><input type="checkbox" />Configure connection
+pooling</label></li>
+<li><label><input type="checkbox" />Enable API rate
+limiting</label></li>
+<li><label><input type="checkbox" />Setup CI/CD pipeline</label></li>
+<li><label><input type="checkbox" />Add database backups</label></li>
+</ul>
+<hr />
+<h2 id="debugging-tips">🎯 DEBUGGING TIPS</h2>
+<h3 id="test-endpoints">Test Endpoints</h3>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get items</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://localhost:8080/api/items</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Signup</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST http://localhost:8080/api/auth/signup <span class="dt">\</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> <span class="dt">\</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">&#39;{&quot;name&quot;:&quot;Test&quot;,&quot;email&quot;:&quot;test@example.com&quot;,&quot;password&quot;:&quot;pass123&quot;,&quot;confirmPassword&quot;:&quot;pass123&quot;}&#39;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Protected endpoint (with token)</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-H</span> <span class="st">&quot;Authorization: Bearer YOUR_TOKEN&quot;</span> <span class="dt">\</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  http://localhost:8080/api/user/profile</span></code></pre></div>
+<h3 id="database-access">Database Access</h3>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-U</span> postgres <span class="at">-d</span> renthub</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">\dt</span>                    <span class="co"># List tables</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ex">SELECT</span> <span class="pp">*</span> FROM users<span class="kw">;</span>   <span class="co"># View users</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">SELECT</span> COUNT<span class="er">(</span><span class="ex">*</span><span class="kw">)</span> <span class="ex">FROM</span> items<span class="kw">;</span>  <span class="co"># Count items</span></span></code></pre></div>
+<h3 id="view-server-logs">View Server Logs</h3>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All output in terminal while running</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> run cmd/renthub/main.go</span></code></pre></div>
+<hr />
+<h2 id="performance">📈 PERFORMANCE</h2>
+<p><strong>Current Optimizations:</strong> - GORM connection pooling -
+Database indexes on foreign keys and search fields - JWT caching during
+request lifecycle</p>
+<p><strong>Future Improvements:</strong> - Redis caching for popular
+items - Query result pagination - Connection pool tuning - Asynchronous
+message processing</p>
+<hr />
+<h2 id="security-notes">🔐 SECURITY NOTES</h2>
+<p>✅ <strong>Implemented:</strong> - JWT authentication (HS256, 7-day
+expiration) - Bcrypt password hashing (cost=10) - CORS configuration -
+Ownership verification for write operations - Authorization checks on
+protected routes</p>
+<p>⚠️ <strong>Recommendations for Production:</strong> - Change JWT
+secret from hardcoded - Implement rate limiting - Add request validation
+logging - Setup SSL certificates - Add refresh token mechanism -
+Implement account lockout after failed logins - Add email
+verification</p>
+<hr />
+<h2 id="testing">🎓 TESTING</h2>
+<p>Currently no automated tests. Recommended tools: - <strong>Unit
+Tests:</strong> testing.T, testify/assert - <strong>Integration
+Tests:</strong> testify/suite, database fixtures - <strong>API
+Tests:</strong> Postman, Insomnia, Thunder Client</p>
+<hr />
+<h2 id="quick-reference">📞 QUICK REFERENCE</h2>
+<p><strong>Start Backend:</strong>
+<code>go run cmd/renthub/main.go</code><br />
+<strong>API Base URL:</strong> <code>http://localhost:8080</code><br />
+<strong>Database:</strong> PostgreSQL on localhost:5432<br />
+<strong>Token Expiration:</strong> 7 days<br />
+<strong>Default Port:</strong> 8080<br />
+<strong>Auth Header:</strong>
+<code>Authorization: Bearer {token}</code></p>
+<hr />
+<h2 id="key-features">✨ KEY FEATURES</h2>
+<p>✅ User authentication with JWT<br />
+✅ Item listing with location data<br />
+✅ Search &amp; filter by category, city, price<br />
+✅ Rental request workflow (2-way approval)<br />
+✅ In-app messaging for negotiations<br />
+✅ Review &amp; rating system<br />
+✅ Wishlist functionality<br />
+✅ User profiles &amp; rental history<br />
+✅ CORS-enabled for frontend<br />
+✅ Comprehensive error handling</p>
+<hr />
+<p><strong>Document Version:</strong> 1.0 | <strong>Status:</strong>
+Complete ✅ | <strong>Last Updated:</strong> May 16, 2024</p>
+</body>
+</html>
