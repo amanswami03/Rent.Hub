@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"quickrent/internal/database"
 	"quickrent/internal/handlers"
 	"quickrent/internal/middleware"
@@ -82,8 +83,12 @@ func main() {
 	}
 
 	// Start server
-	log.Println("Starting server on :8080")
-	if err := router.Run(":8080"); err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Println("Starting server on :" + port)
+	if err := router.Run(":" + port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }
