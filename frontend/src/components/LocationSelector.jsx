@@ -87,8 +87,8 @@ function LocationSelector({ onLocationSelect, isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
-      <div className="bg-white rounded-t-3xl w-full max-w-md p-6 relative">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-3xl w-full max-w-md p-6 relative">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -139,7 +139,7 @@ function LocationSelector({ onLocationSelect, isOpen, onClose }) {
 
             <button
               onClick={() => setUseManual(true)}
-              className="w-full border-2 border-black hover:border-gray-800 text-black py-3 rounded-lg font-semibold transition bg-white hover:bg-gray-50"
+              className="w-full border-2 border-black hover:border-gray-800 text-white py-3 rounded-lg font-semibold transition bg-black hover:bg-gray-800"
             >
               Enter Pincode / City
             </button>
@@ -181,7 +181,7 @@ function LocationSelector({ onLocationSelect, isOpen, onClose }) {
                 setCity('');
                 setPincode('');
               }}
-              className="w-full border-2 border-black hover:border-gray-800 text-black py-3 rounded-lg font-semibold transition bg-white hover:bg-gray-50"
+              className="w-full border-2 border-black hover:border-gray-800 text-white py-3 rounded-lg font-semibold transition bg-black hover:bg-gray-800"
             >
               Back
             </button>

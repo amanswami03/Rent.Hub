@@ -95,28 +95,29 @@ function UserAccount({ isOpen, onClose, token, user, onLogout }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto pt-20">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-8 relative">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl relative my-20">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          className="absolute -top-8 right-2 md:-top-10 md:right-4 text-gray-500 hover:text-gray-700 z-10 p-1"
         >
           <X size={24} />
         </button>
 
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold text-gray-800">My Account</h2>
-          <button
-            onClick={() => {
-              onClose();
-              onLogout();
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
-          >
-            <LogOut size={18} />
-            Logout
-          </button>
-        </div>
+        <div className="p-8">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-3xl font-bold text-gray-800">My Account</h2>
+            <button
+              onClick={() => {
+                onClose();
+                onLogout();
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
+            >
+              <LogOut size={18} />
+              Logout
+            </button>
+          </div>
 
         {error && (
           <div className="mb-6 flex items-center gap-3 bg-red-50 border border-red-200 rounded-lg p-4">
@@ -312,6 +313,7 @@ function UserAccount({ isOpen, onClose, token, user, onLogout }) {
               )}
             </div>
           )}
+        </div>
         </div>
       </div>
 
